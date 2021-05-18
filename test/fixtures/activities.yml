@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  description: MyString
+  sendDate: 2021-05-17
+  advance: 
+  note: 9.99
+  asignature: one
+
+two:
+  name: MyString
+  description: MyString
+  sendDate: 2021-05-17
+  advance: 
+  note: 9.99
+  asignature: two

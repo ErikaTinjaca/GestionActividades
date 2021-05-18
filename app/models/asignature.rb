@@ -1,0 +1,2 @@
+class Asignature < ApplicationRecord
+end

@@ -1,0 +1,84 @@
+#barra{
+    background-color: rgba(84, 135, 151, 0.7) ;
+    height: 100%;
+    width: max-content;
+}
+li{
+    border-bottom: solid;
+    border-color: #FFFFFF;
+}
+nav-item{
+    width: max-content;
+}
+#contenedorAsignatura{
+    background-color: rgba(52, 63, 75,0.4);
+    filter: drop-shadow(3px 3px 3px #444);
+    text-align: center;
+    padding: 10px;
+}
+
+#contenedorp{
+    box-shadow: 2px 2px 10px #666;
+}
+#cActividad{
+    background-color: rgba(255, 144, 82,0.2);
+    border: solid 3px;
+    
+}
+p{
+    font-size: 30px;
+    padding-left: 50px;
+}
+.btn{
+    background-color: #47525E;
+}
+#alerta{
+    background-color: rgb(149, 95, 98);
+    border: solid;
+    text-align: center;
+    padding: 0px;
+}
+.form-control{
+    border-radius: 3px;
+    border-color: black;
+}
+.card{
+    border-radius: 3px;
+}
+#gActividadesh{
+    background: rgba(249, 95, 98,0.55);
+    border: 3px;
+    border-color: black;
+    color: black;
+    text-align: center;
+}
+#avance{
+    background: rgba(0, 166, 255,0.43);
+    border: 3px;
+    border-color: black;
+    color: black;
+    text-align: center;
+}
+.card-header{
+    background: rgba(19, 206, 102,0.31);
+    border: 3px;
+    border-color: black;
+    color: black;
+    text-align: center;
+}
+
+#Ntotal{
+    background-color: rgba(119,211,83, 0.57);
+    padding: 30px;
+    font-size: 20px;
+    text-align: center;
+}
+#Nnecesita{
+    background-color: rgba(249,95,98,1);
+    padding: 205x;
+    font-size: 20px;
+    text-align: center;
+}
+table{
+    text-align: center;
+}
