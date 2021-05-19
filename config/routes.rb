@@ -3,4 +3,6 @@ Rails.application.routes.draw do
   root 'asignature#index'
   get '/asignature/index'
   get '/asignature/gestion'
+  get '/activity/progress'
+  get '/activity/resume'
 end

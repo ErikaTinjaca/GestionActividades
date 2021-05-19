@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_17_201415) do
+ActiveRecord::Schema.define(version: 2021_05_19_193932) do
 
   create_table "activities", charset: "utf8mb4", force: :cascade do |t|
     t.string "name"
@@ -21,6 +21,8 @@ ActiveRecord::Schema.define(version: 2021_05_17_201415) do
     t.bigint "asignature_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "value"
+    t.time "limitHour"
     t.index ["asignature_id"], name: "index_activities_on_asignature_id"
   end
 
