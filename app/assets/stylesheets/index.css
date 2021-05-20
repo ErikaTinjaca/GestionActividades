@@ -38,6 +38,18 @@ p{
     text-align: center;
     padding: 0px;
 }
+#alerta2{
+    background-color: rgb(92, 183, 114);
+    border: solid;
+    text-align: center;
+    padding: 0px;
+}
+#alerta3{
+    background-color: rgb(92, 131, 183);
+    border: solid;
+    text-align: center;
+    padding: 0px;
+}
 .form-control{
     border-radius: 3px;
     border-color: black;
@@ -80,5 +92,9 @@ p{
     text-align: center;
 }
 table{
+    text-align: center;
+}
+em{
+    color: red;
     text-align: center;
 }

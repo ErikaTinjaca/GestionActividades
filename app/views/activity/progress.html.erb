@@ -5,37 +5,52 @@
             <div class="row justify-content-center">
                 <P></P>
                 <div class="row mb-3">
+                <em class="alert"><%= alert %></em>
                     <div class="col-sm-6 mb-3">
                         <div class="row mb-3">
                             <div class="card border-dark col-sm-12">
                                 <div class="card-header ">RENDIMIENTO</div>
                                 <div class="card-body">
-                                    <form>
+                                    <%= form_with url:"/activity/progress" do |f|%>
                                         <div class="row mb-3 justify-content-center">
-                                            <div class="col-sm-8 aling-self-center">
-                                                <select class="form-select form-select-lg mb-3">
-                                                    <option selected>Asignatura</option>
-                                                </select>
+                                            <div class="col-sm-8 aling-self-center mb-3">
+                                               <%= f.select :asignature_id,class:"form-select form-select-lg mb-3", method: :put do %>
+                                                    <%= content_tag(:option, "Seleccione" , value: 0 , class:"form-select form-select-lg mb-3") %>
+                                                    <% Asignature.all.each do |c| -%>
+                                                        <%= content_tag(:option, c.name << "--->" << c.id.to_s, value: c.id, class:"form-control form-control-lg col mb-3") %>
+                                                    
+                                                    <% end %>
+                                                <% end %>
                                             </div>
                                             <div class="col-sm-4">
-                                                <button type="button" class="btn btn-primary">Buscar</button>
+                                                <%= f.submit "Buscar",class:"btn btn-primary" %>
                                             </div>
                                         </div>
-                                    </form>
-                                    <div class="row">
-                                        <div class="col-sm-7">
-                                            <div class="container" id="Ntotal">
+                                    <%end%>
+                                    <%= puts @init%>
+                                    
+                                    <%if @init== "0" %>
+                                        
+                                        <p>No hay una monda</p>
+                                    <%else%>
+                                    
+                                        <div class="row">
+                                            <div class="col-sm-7">
+                                                <div class="container" id="Ntotal">
                                                 <label>Tienes</label>
-                                                <h1>3.0</h1>
+                                                        <h1><%= @notaS %></h1>                                                           
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-sm-5">
+                                            <div class="col-sm-5">
                                             <div class="container" id="Nnecesita">
                                                 <label>Falta</label>
-                                                <h1>3.0</h1>
+                                                <h1><%= @faltanteS%></h1>
+                                            </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    <%end%>
+
+
                                 </div>
 
                             </div>
@@ -44,26 +59,27 @@
                     <div class="col-sm-6">
                         <div class="card border-dark">
                             <div class="card-header" id="avance">REGISTRAR AVANCE</div>
-                            <div class="card-body">
-                                <form>
+                            <div class="card-body">   
+                               <%= form_with url:"/activity/addProgress" do |f|%> 
                                     <div class="row mb-3 justify-content-center">
                                         <div class="col-sm-8">
-                                            <select class="form-select form-select-lgt mb-3">
-                                                <option>Asignatura</option>
-                                            </select>
-                                            <select class="form-select form-select-lgt mb-3 col-sm-12">
-                                                <option>Actividad</option>
-                                            </select>
-                                            <input class="form-control col-sm-12 mb-3" type="number"
-                                                placeholder="Avance">
+                                           <%= f.select :activitie_id,class:"form-select form-select-lg mb-3", method: :put do %>
+                                                <%= content_tag(:option, "Seleccione" , value: 0 , class:"form-select form-select-lg mb-3") %>
+                                                <% Activity.where("advance<100").each do |c| -%>
+                                                    <%= content_tag(:option, c.name << "--->" << Asignature.find_by(id:c.asignature_id).name, value: c.id, class:"form-control form-control-lg col mb-3") %>
+                                                    
+                                                <% end %>
+                                            <% end %>
+                                            <p></p>
+                                            <%= f.number_field :percenAv, autofocus: true, autocomplete: "percenAv" ,class:"form-control col-sm-12 mb-3", placeholder:"Avance" %>
                                             <div class="col-sm-12 mb-3">
-                                                <button type="button" class="btn btn-primary">Registrar
-                                                    avance</button>
+                                                <%= f.submit "Registrar avance",class:"btn btn-primary" %>
                                             </div>
                                         </div>
                                     </div>
-                                </form>
+                                <%end%>
                             </div>
+                            
                         </div>
                     </div>
                 </div>

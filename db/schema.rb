@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_19_193932) do
+ActiveRecord::Schema.define(version: 2021_05_20_113753) do
 
   create_table "activities", charset: "utf8mb4", force: :cascade do |t|
     t.string "name"
     t.string "description"
     t.date "sendDate"
     t.integer "advance"
-    t.decimal "note", precision: 10
+    t.decimal "note", precision: 10, scale: 3
     t.bigint "asignature_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

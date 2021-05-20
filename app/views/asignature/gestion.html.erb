@@ -5,101 +5,123 @@
             <div class="row justify-content-center">
                 <div class="row justify-content-center">
                     <div class="row mb-3">
+                        <em class="alert"><%= alert %></em>
                         <div class="col-sm-5 mb-3">
-                            <p></p>
                             <div class="col-sm-12 card" id="cActividad">
                                 <div class="card">
                                     <div class="card-header" id="gActividadesh">
                                         <h2 style="text-align: center">ACTIVIDADES</h2>
                                     </div>
                                     <div class="card-body" style="background-color: white">
-                                        <form>
+                                        <%= form_with url: "/asignature/createActivity" do |f| %>
                                             <div class="row mb-3 justify-content-center">
-                                                <div class="col-sm-8">
-                                                    <select class="form-select form-select-lg mb-3">
-                                                        <option selected>Asignatura</option>
-                                                    </select>
+                                                <div class="col-sm-8 mb-3">
+                                                    <%= f.select :asignature_id,class:"form-select form-select-lg mb-3", method: :put do %>
+                                                        <%= content_tag(:option, "Seleccione" , value: 0 , class:"form-select form-select-lg mb-3") %>
+                                                            <% Asignature.all.each do |c| -%>
+                                                                <%= content_tag(:option, c.name << "--->" << c.id.to_s, value: c.id, class:"form-control form-control-lg col mb-3") %>
+                                                            <% end %>
+                                                    <% end %>
                                                 </div>
                                                 <div class="col-sm-8">
-                                                    <input class="form-control mb-3" type="text" placeholder="Nombre">
+                                                    <%= f.number_field :codeAc, autofocus: true, autocomplete: "codeAc" ,class:"form-control mb-3", placeholder:"Codigo" %>
                                                 </div>
                                                 <div class="col-sm-8">
-                                                    <textarea class="form-control mb-3" type="text"
-                                                        placeholder="Descripción"></textarea>
+                                                    <%= f.text_field :nameAc, autofocus: true, autocomplete: "nameAc" ,class:"form-control mb-3", placeholder:"Nombre" %>
                                                 </div>
                                                 <div class="col-sm-8">
-                                                    <input class="form-control mb-3" type="number"
-                                                        placeholder="Porcentaje de valor">
+                                                    <%= f.text_field :descriptionAc, autofocus: true, autocomplete: "descriptionAc" ,class:"form-control mb-3", placeholder:"Descripcion" %>
+                                                </div>
+                                                <div class="col-sm-8">
+                                                    <%= f.number_field :percenAc, autofocus: true, autocomplete: "percenAc" ,class:"form-control mb-3", placeholder:"Porcentaje" %>
                                                 </div>
                                                 <div class="col-sm-8">
                                                     <label for="fecha">Fecha de entrega</label>
-                                                    <input class="form-control mb-3" type="date" id="fecha">
+                                                    <%= f.date_field :dateAc ,class:"form-control mb-3", id:"fecha" %>
                                                 </div>
                                                 <div class="col-sm-8">
                                                     <label for="fecha">Hora limite</label>
-                                                    <input class="form-control mb-3" type="time" id="fecha">
+                                                    <%= f.time_field :hourAc,class:"form-control mb-3", id:"hora"%>
                                                 </div>
                                                 <div class="col-sm-5 aling-self-end">
-                                                    <button type="button" class="btn btn-primary">Añadir</button>
+                                                    <%= f.submit "Añadir",class:"btn btn-primary", id:"btnAceptar",commit:"Añadir" %>
                                                 </div>
                                             </div>
-                                        </form>
-                                    </div>
+                                        <%end%>
+                                  </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-7 mb-3">
-                            <P></P>
                             <div class="row mb-3">
                                 <div class="card border-dark col-sm-12">
                                     <div class="card-header" id="avance">Tus asignaturas</div>
                                     <div class="card-body">
-                                        <form>
+                                        <%= form_with url: "/asignature/create"  do |f| %>
                                             <div class="row mb-3 justify-content-center">
+                                                
                                                 <div class="col-sm-4">
-                                                    <input class="form-control mb-3" type="text" placeholder="Codigo">
+                                                    <%= f.number_field :codeAs, autofocus: true, autocomplete: "codeAs" ,class:"form-control mb-3", placeholder:"Codigo" %>
                                                 </div>
                                                 <div class="col-sm-4">
-                                                    <input class="form-control mb-3" type="text" placeholder="Nombre">
+                                                    <%= f.text_field :nameAs, autofocus: true, autocomplete: "nameAs" ,class:"form-control mb-3", placeholder:"Nombre" %>
                                                 </div>
                                                 <div class="col-sm-4">
-                                                    <input class="form-control mb-3" type="number"
-                                                        placeholder="creditos">
+                                                    <%= f.number_field :creditAs, autofocus: true, autocomplete: "creditAs" ,class:"form-control mb-3", placeholder:"Creditos" %>
                                                 </div>
                                                 <div class="col-sm-5 aling-self-end">
-                                                    <button type="button" class="btn btn-primary">Añadir</button>
+                                                    <%= f.submit "Añadir",class:"btn btn-primary", id:"btnAceptar",commit:"Añadir" %>
                                                 </div>
                                                 <div class="col-sm-5 aling-self-end">
-                                                    <button type="button" class="btn btn-primary">Actualizar</button>
+                                                    <%= f.submit "Actualizar",class:"btn btn-primary", id:"btnActualizar",commit:"Actualizar" %>
+                                                   
                                                 </div>
                                             </div>
-                                        </form>
+                                        <%end%>                                        
                                     </div>
-
-                                    <table class="table table-bordered border-dark table-striped">
+                                    <% if @Allasignatures.empty?%>
+                                        <p>No cuentas con asignaturas registradas<p>
+                                    <%else%>
+                                        <table class="table table-bordered border-dark table-striped">
                                         <thead>
                                             <tr>
                                                 <th scope="col">Codigo</th>
                                                 <th scope="col">Nombre</th>
                                                 <th scope="col">Creditos</th>
+                                                <th scope="col">Eliminar</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>0987</td>
-                                                <td>Electiva II</td>
-                                                <td>3</td>
-                                            </tr>
+                                            
+                                                <% @Allasignatures.each do |c| %>
+                                                <tr>
+                                                    <td><%=c.id%></td>
+                                                    <td><%=c.name%></td>
+                                                    <td><%=c.credits%></td>
+                                                    <td><%=form_with url:"/asignature/delete", method: :delete do |g|%>
+                                                        <%= g.hidden_field :asignature_id, value:c.id %>
+                                                        <%= g.submit "Eliminar",class:"btn btn-primary", id:"btnEliminar" %>
+                                                    <%end%>                                       
+                                                    </td>
+                                                </tr> 
+                                                <% end %>        
                                         </tbody>
                                     </table>
-
+                                    <%end%>
+                                    <div class="card-footer">
+                                        <div class="row justify-content-center">
+                                            <div class="col-sm-4 aling-self-center">
+                                                <%= form_with url: "/asignature/deleteAll",method: :delete do |f| %>
+                                                    <%= f.submit "Vaciar todo",class:"btn btn-primary", id:"btnVaciar",commit:"vaciar" %>    
+                                                <%end%>
+                                            </div>
+                                        </div>                       
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
-
             </div>
         </div>
     </div>

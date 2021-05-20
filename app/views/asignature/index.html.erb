@@ -4,104 +4,92 @@
         <div class="container" id="contenedorp">
             <div class="row justify-content-center">
                 <div class="row mb-3">
-                    <div class="col-sm-7 mb-3">
+                    <div class="col-sm-12 mb-3">
                         <p></p>
                         <h2 style="text-align: center">Actividades</h2>
-                        <div class="col-sm-12" id="cActividad">
-                            <h4 style="text-align: center">Actividad</h4>
-                            <p>Asignatura:</p>
-                            <p>Fecha de entrega:</p>
-                            <p>Descipción: </p>
-                            <p>Avance: </p>
-                            <p id="alerta">Quedan: </p>
-                            <form>
-                                <div class="row mb-3 justify-content-center">
-                                    <div class="col-sm-6">
-                                        <input class="form-control" type="text" placeholder="Nota">
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <button type="button" class="btn btn-primary">Registrar entrega</button>
-                                    </div>
-                                </div>
-                                <div class="row mb-3 justify-content-center">
-                                    <div class="col-sm-6">
-                                        <label for="Nf">Nueva fecha</label>
-                                        <input class="form-control" type="date" placeholder="Nueva fecha" id="Nf">
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <button type="button" class="btn btn-primary"
-                                            style="background-color:#47525E">Registrar cambio</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="col-sm-5 mb-3">
-                        <P></P>
-                        <h3 style="text-align: center">Balance</h3>
-                        <div class="row mb-3">
-                            <div class="card border-dark col-sm-12">
-                                <div class="card-header ">RENDIMIENTO</div>
-                                <div class="card-body">
-                                    <form>
-                                        <div class="row mb-3 justify-content-center">
-                                            <div class="col-sm-8 aling-self-center">
-                                                <select class="form-select form-select-lg mb-3">
-                                                    <option selected>Asignatura</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <button type="button" class="btn btn-primary">Buscar</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                    <div class="row">
-                                        <div class="col-sm-7">
-                                            <div class="container" id="Ntotal">
-                                                <label>Tienes</label>
-                                                <h1>3.0</h1>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-5">
-                                            <div class="container" id="Nnecesita">
-                                                <label>Falta</label>
-                                                <h1>3.0</h1>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="card border-dark col-sm-12">
-                                <div class="card-header" id="avance">REGISTRAR AVANCE</div>
-                                <div class="card-body">
-                                    <form>
-                                        <div class="row mb-3 justify-content-center">
-                                            <div class="col-sm-8">
-                                                <select class="form-select form-select-lgt mb-3">
-                                                    <option>Asignatura</option>
-                                                </select>
-                                                <select class="form-select form-select-lgt mb-3 col-sm-12">
-                                                    <option>Actividad</option>
-                                                </select>
-                                                <input class="form-control col-sm-12 mb-3" type="number"
-                                                    placeholder="Avance">
-                                                <div class="col-sm-12 mb-3">
-                                                    <button type="button" class="btn btn-primary">Registrar
-                                                        avance</button>
+                        <% if @Allactivities.empty? && @Activitiesdel.empty?%>
+                            <p>No cuentas con Actividades pendientes<p>
+                        <%else%>
+                            <% @Allactivities.each do |c| %>
+                                <p></p>
+                                <div class="col-sm-12 mb-3" id="cActividad">
+                                    <h4 style="text-align: center">Actividad</h4>
+                                    <p>Codigo asignatura: <%=c.asignature_id%></p>
+                                    <p>Codigo actividad: <%=c.id%></p>
+                                    <p>Asignatura: <%=Asignature.find(c.asignature_id).name%></p>
+                                    <p>Fecha de entrega: <%=c.sendDate%></p>
+                                    <p>Hora de entrega: <%=c.limitHour.strftime("%H:%M")%></p>
+                                    <p>Actividad: <%=c.name%></p>
+                                    <p>Descipción: <%=c.description%></p>
+                                    <p>Porcentaje en la materia: <%=c.value%>%</p>
+                                    <p>Avance: <%=c.advance%>%</p>
+                                    <%if c.note.nil?%>
+                                        <%require 'Date'%>
+                                        <%now= Date.today%>
+                                        <%dias = (c.sendDate - now).to_i%>
+                                        <%if dias<= 3%>
+                                            <p id="alerta">Quedan: <%=dias%> dias</p>
+                                        <%else%>
+                                            <p id="alerta3">Quedan: <%=dias%> dias</p>
+                                        <%end%>
+    
+                                    <%end%>
+                                    <%=form_with url:"/asignature/addNote" do |f|%>
+                                            <div class="row mb-3 justify-content-center">
+                                                <em class="alert"><%= alert %></em>
+                                                <div class="col-sm-6">
+                                                    <%= f.hidden_field :activity_id, value:c.id %>
+                                                    <%= f.number_field :Note, step:"0.01",autofocus: true, autocomplete: "Note" ,class:"form-control", placeholder:"Nota" %>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <%= f.submit "Registrar entrega",class:"btn btn-primary", id:"btnAdd" %>
                                                 </div>
                                             </div>
+                                    <%end%>
+                                    <%=form_with url:"/asignature/updateDate" do |f|%>
+                                        <div class="row mb-3 justify-content-center">
+                                            <div class="col-sm-6">
+                                                <%= f.hidden_field :activity_id, value:c.id %>
+                                                <label for="Nf">Nueva fecha</label>
+                                                <%= f.date_field :dateUp ,class:"form-control mb-3", id:"Nf" %>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <%= f.submit "Registrar cambio",class:"btn btn-primary", id:"btnupdate",style:"background-color:#47525E" %>
+                                            </div>
                                         </div>
-                                    </form>
+                                    <%end%>
                                 </div>
-                            </div>
-                        </div>
+                            <%end%>
+
+                            <% @Activitiesdel.each do |c| %>
+                                <div class="col-sm-12 mb-3" id="cActividad">
+                                    <h4 style="text-align: center">Actividad</h4>
+                                   <p>Codigo asignatura: <%=c.asignature_id%></p>
+                                    <p>Codigo actividad: <%=c.id%></p>
+                                    <p>Asignatura: <%=Asignature.find(c.asignature_id).name%></p>
+                                    <p>Fecha de entrega: <%=c.sendDate%></p>
+                                    <p>Hora de entrega: <%=c.limitHour.strftime("%H:%M")%></p>
+                                    <p>Actividad: <%=c.name%></p>
+                                    <p>Descipción: <%=c.description%></p>
+                                    <p>Porcentaje en la materia: <%=c.value%>%</p>
+                                    <p>Avance: <%=c.advance%>%</p>
+                                    <%if c.note.nil?%>
+                                        <%require 'Date'%>
+                                        <%now= Date.today%>
+                                        <%dias = (c.sendDate - now).to_i%>
+                                        <%if dias<= 3%>
+                                            <p id="alerta">Quedan: <%=dias%> dias</p>
+                                        <%else%>
+                                            <p id="alerta3">Quedan: <%=dias%> dias</p>
+                                        <%end%>
+                                    <%else%>
+                                         <p id="alerta2">Actividad Presentada, calificacion de <%=c.note%></p>
+                                    <%end%>
+                                </div>
+                            <%end%>         
+                        <%end%>
                     </div>
                 </div>
-
-            </div>
         </div>
     </div>
 </div>
